@@ -1,0 +1,15 @@
+bin/
+obj/
+artifacts/
+branding/
+local.build.props
+*.user
+*.suo
+.vs/
+.idea/
+.codex/
+MelonLoader/
+AssetRipper*/
+*.dll
+*.pdb
+*.log

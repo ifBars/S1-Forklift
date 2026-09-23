@@ -1,0 +1,64 @@
+[size=5]Forklift & Pallets[/size]
+Forklift & Pallets adds a forklift and storage pallets to Schedule I, so you can load goods, move them around your properties, and set them down where you need them.
+
+[size=4]What it is[/size]
+Storage Pallets are placeable furniture with native storage. Fill one, line it up with the forklift, lift it, drive it to its destination, and set it down again. Pallets remain in the world and their placement is restored after save/load.
+
+[size=4]Features[/size]
+[list][*]Adds a drivable forklift that uses Schedule I's normal vehicle controls.
+[*]Buy the [b]Forklift[/b] for [b]$20,000[/b] from Jeremy at [b]Hyland Auto[/b].
+[*]Adds the [b]Storage Pallet[/b], a placeable wooden pallet with native storage.
+[*]Buy Storage Pallets for [b]$60[/b] from [b]Handy Hank's Hardware[/b] and [b]Dan's Hardware[/b].
+[*]Fill a pallet, move it on the forks, and set it down again.
+[*]Stored items remain accessible while a pallet is being carried.
+[*]Carry a Storage Pallet into a shop loading bay to use Schedule I's [b]Load vehicle[/b] checkout option; purchases load onto the pallet, while a forklift without one exposes no vehicle storage.
+[*]Property gates and police checkpoints recognize the forklift as a vehicle.
+[*]Assign placed Storage Pallets as employee supplies or route storage so workers can retrieve seeds and other items.
+[*]Assign an employee route to a property [b]Loading Dock[/b], then park a stopped forklift carrying a Storage Pallet there to have the employee walk to and load the pallet on the forks.
+[*]Police checkpoint officers search the carried pallet at the forks, including its contents in the contraband check, instead of searching a car-style trunk at the rear.
+[*]Increased motor torque makes hill climbing easier without changing the forklift's 22 km/h speed setting.
+[*]Held items are hidden from the seated driver avatar and return normally after exiting.
+[*]Forklift handling uses front-wheel drive and rear-wheel steering.
+[*]Forklift and free-world pallet placement persist through save/load.
+[*]Lift keys, lift speed, and maximum lift height are configurable through MelonPreferences.
+[/list]
+[size=4]Basic install[/size]
+[list][*]Install [b]MelonLoader[/b] for Schedule I.
+[*]Install the matching [b]S1API[/b] release for your game runtime.
+[*]Download the matching Forklift & Pallets DLL.
+[*]Put that DLL in Schedule I's [i][font=Courier New]Mods[/font][/i] folder.
+[*]Launch the game.
+[/list]
+[size=4]Important: pick the right file[/size]
+Install only the DLL that matches your game runtime.
+
+[list][*][b]IL2CPP:[/b] [i][font=Courier New]ForkliftandPallets_Il2Cpp.dll[/font][/i]
+[*][b]Mono:[/b] [i][font=Courier New]ForkliftandPallets_Mono.dll[/font][/i]
+[/list]
+[size=4]Controls[/size]
+Use Schedule I's normal vehicle controls to drive, brake, enter, and exit.
+
+[list][*][i][font=Courier New]Page Up[/font][/i]: Pick up an aligned pallet, then raise the forks.
+[*][i][font=Courier New]Page Down[/font][/i]: Lower the forks. Near level ground and below 5 km/h, this releases the carried pallet.
+[/list]
+[size=4]Employee loading docks[/size]
+Set the employee route's source to the storage holding the items and its destination to the property's [b]Loading Dock[/b]. Park a forklift carrying a Storage Pallet in that dock and stop the vehicle. The employee will walk to a reachable side of the pallet on the forks and load routed items into it; the route waits whenever the forklift or pallet is absent.
+
+[size=4]Configuration[/size]
+Open MelonPreferences and look for [b]ForkliftandPallets[/b] to change the lift keys, maximum lift height, and lift speed.
+
+[size=4]Requirements and compatibility[/size]
+[list][*]Schedule I
+[*]MelonLoader
+[*]S1API
+[*]The matching Forklift & Pallets build for Mono or IL2CPP
+[/list]
+The mod ships separate Mono and IL2CPP builds. Vehicle driving and spawning use Schedule I's native networking systems.
+
+[size=4]Multiplayer note[/size]
+The forklift lift state and carried-pallet synchronization are currently local to the controlling player. Multiplayer pallet lifting should be treated as experimental.
+
+[size=4]Notes[/size]
+[list][*]Set pallets down close to level ground; they drop and settle physically before becoming stable.
+[*]Storage Pallets use Schedule I's native placeable-storage interaction and save behavior.
+[/list]

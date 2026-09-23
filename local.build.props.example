@@ -1,0 +1,11 @@
+<Project>
+  <PropertyGroup>
+    <LocalMonoDeploymentPath>D:\Games\Schedule I_alternate</LocalMonoDeploymentPath>
+    <LocalIl2CppDeploymentPath>D:\Games\Schedule I_public</LocalIl2CppDeploymentPath>
+    <MonoAssembliesPath>$(LocalMonoDeploymentPath)\Schedule I_Data\Managed</MonoAssembliesPath>
+    <MonoMelonLoaderPath>$(LocalMonoDeploymentPath)\MelonLoader\net35</MonoMelonLoaderPath>
+    <Il2CppAssembliesPath>$(LocalIl2CppDeploymentPath)\MelonLoader\Il2CppAssemblies</Il2CppAssembliesPath>
+    <Il2CppMelonLoaderPath>$(LocalIl2CppDeploymentPath)\MelonLoader\net6</Il2CppMelonLoaderPath>
+    <AutomateLocalDeployment>false</AutomateLocalDeployment>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,103 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="local.build.props" Condition="Exists('local.build.props')" />
+
+  <PropertyGroup>
+    <Configurations>Mono;Il2cpp</Configurations>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>S1Forklift</RootNamespace>
+    <Version>1.2.0</Version>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <AutomateLocalDeployment Condition="'$(AutomateLocalDeployment)' == ''">false</AutomateLocalDeployment>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Mono'">
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>ForkliftandPallets_Mono</AssemblyName>
+    <DefineConstants>$(DefineConstants);MONO;MONOMELON</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Il2cpp'">
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>ForkliftandPallets_Il2Cpp</AssemblyName>
+    <DefineConstants>$(DefineConstants);IL2CPP;IL2CPPMELON</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="tests\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'Mono'">
+    <Reference Include="0Harmony" HintPath="$(MonoMelonLoaderPath)\0Harmony.dll" Private="false" />
+    <Reference Include="Assembly-CSharp" HintPath="$(MonoAssembliesPath)\Assembly-CSharp.dll" Private="false" />
+    <Reference Include="FishNet.Runtime" HintPath="$(MonoAssembliesPath)\FishNet.Runtime.dll" Private="false" />
+    <Reference Include="MelonLoader" HintPath="$(MonoMelonLoaderPath)\MelonLoader.dll" Private="false" />
+    <Reference Include="RootMotion" HintPath="$(MonoAssembliesPath)\RootMotion.dll" Private="false" />
+    <Reference Include="ScheduleOne.Core" HintPath="$(MonoAssembliesPath)\ScheduleOne.Core.dll" Private="false" />
+    <Reference Include="S1API" HintPath="$(S1ApiMonoPath)" Private="false" />
+    <Reference Include="UnityEngine" HintPath="$(MonoAssembliesPath)\UnityEngine.dll" Private="false" />
+    <Reference Include="UnityEngine.AnimationModule" HintPath="$(MonoAssembliesPath)\UnityEngine.AnimationModule.dll" Private="false" />
+    <Reference Include="UnityEngine.CoreModule" HintPath="$(MonoAssembliesPath)\UnityEngine.CoreModule.dll" Private="false" />
+    <Reference Include="UnityEngine.InputLegacyModule" HintPath="$(MonoAssembliesPath)\UnityEngine.InputLegacyModule.dll" Private="false" />
+    <Reference Include="Unity.InputSystem" HintPath="$(MonoAssembliesPath)\Unity.InputSystem.dll" Private="false" />
+    <Reference Include="UnityEngine.PhysicsModule" HintPath="$(MonoAssembliesPath)\UnityEngine.PhysicsModule.dll" Private="false" />
+    <Reference Include="UnityEngine.AIModule" HintPath="$(MonoAssembliesPath)\UnityEngine.AIModule.dll" Private="false" />
+    <Reference Include="UnityEngine.ScreenCaptureModule" HintPath="$(MonoAssembliesPath)\UnityEngine.ScreenCaptureModule.dll" Private="false" />
+    <Reference Include="Unity.TextMeshPro" HintPath="$(MonoAssembliesPath)\Unity.TextMeshPro.dll" Private="false" />
+    <Reference Include="UnityEngine.UI" HintPath="$(MonoAssembliesPath)\UnityEngine.UI.dll" Private="false" />
+    <Reference Include="UnityEngine.VehiclesModule" HintPath="$(MonoAssembliesPath)\UnityEngine.VehiclesModule.dll" Private="false" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'Il2cpp'">
+    <Reference Include="0Harmony" HintPath="$(Il2CppMelonLoaderPath)\0Harmony.dll" Private="false" />
+    <Reference Include="Assembly-CSharp" HintPath="$(Il2CppAssembliesPath)\Assembly-CSharp.dll" Private="false" />
+    <Reference Include="Assembly-CSharp-firstpass" HintPath="$(Il2CppAssembliesPath)\Assembly-CSharp-firstpass.dll" Private="false" />
+    <Reference Include="Il2CppFishNet.Runtime" HintPath="$(Il2CppAssembliesPath)\Il2CppFishNet.Runtime.dll" Private="false" />
+    <Reference Include="Il2CppInterop.Runtime" HintPath="$(Il2CppMelonLoaderPath)\Il2CppInterop.Runtime.dll" Private="false" />
+    <Reference Include="Il2Cppmscorlib" HintPath="$(Il2CppAssembliesPath)\Il2Cppmscorlib.dll" Private="false" />
+    <Reference Include="MelonLoader" HintPath="$(Il2CppMelonLoaderPath)\MelonLoader.dll" Private="false" />
+    <Reference Include="Il2CppRootMotion" HintPath="$(Il2CppAssembliesPath)\Il2CppRootMotion.dll" Private="false" />
+    <Reference Include="Il2CppScheduleOne.Core" HintPath="$(Il2CppAssembliesPath)\Il2CppScheduleOne.Core.dll" Private="false" />
+    <Reference Include="S1API" HintPath="$(S1ApiIl2CppPath)" Private="false" />
+    <Reference Include="UnityEngine" HintPath="$(Il2CppAssembliesPath)\UnityEngine.dll" Private="false" />
+    <Reference Include="UnityEngine.AnimationModule" HintPath="$(Il2CppAssembliesPath)\UnityEngine.AnimationModule.dll" Private="false" />
+    <Reference Include="UnityEngine.CoreModule" HintPath="$(Il2CppAssembliesPath)\UnityEngine.CoreModule.dll" Private="false" />
+    <Reference Include="UnityEngine.InputLegacyModule" HintPath="$(Il2CppAssembliesPath)\UnityEngine.InputLegacyModule.dll" Private="false" />
+    <Reference Include="Unity.InputSystem" HintPath="$(Il2CppAssembliesPath)\Unity.InputSystem.dll" Private="false" />
+    <Reference Include="UnityEngine.PhysicsModule" HintPath="$(Il2CppAssembliesPath)\UnityEngine.PhysicsModule.dll" Private="false" />
+    <Reference Include="UnityEngine.AIModule" HintPath="$(Il2CppAssembliesPath)\UnityEngine.AIModule.dll" Private="false" />
+    <Reference Include="UnityEngine.ScreenCaptureModule" HintPath="$(Il2CppAssembliesPath)\UnityEngine.ScreenCaptureModule.dll" Private="false" />
+    <Reference Include="Unity.TextMeshPro" HintPath="$(Il2CppAssembliesPath)\Unity.TextMeshPro.dll" Private="false" />
+    <Reference Include="UnityEngine.UI" HintPath="$(Il2CppAssembliesPath)\UnityEngine.UI.dll" Private="false" />
+    <Reference Include="UnityEngine.VehiclesModule" HintPath="$(Il2CppAssembliesPath)\UnityEngine.VehiclesModule.dll" Private="false" />
+  </ItemGroup>
+
+  <Target Name="ValidateBuildPaths" BeforeTargets="ResolveReferences">
+    <Error Condition="'$(Configuration)' != 'Mono' and '$(Configuration)' != 'Il2cpp'"
+           Text="Build S1-Forklift with Configuration=Mono or Configuration=Il2cpp." />
+    <Error Condition="'$(Configuration)' == 'Mono' and (!Exists('$(MonoAssembliesPath)\Assembly-CSharp.dll') or !Exists('$(MonoMelonLoaderPath)\MelonLoader.dll'))"
+           Text="Configure MonoAssembliesPath and MonoMelonLoaderPath in local.build.props." />
+    <Error Condition="'$(Configuration)' == 'Il2cpp' and (!Exists('$(Il2CppAssembliesPath)\Assembly-CSharp.dll') or !Exists('$(Il2CppMelonLoaderPath)\MelonLoader.dll'))"
+           Text="Configure Il2CppAssembliesPath and Il2CppMelonLoaderPath in local.build.props." />
+    <Error Condition="'$(Configuration)' == 'Mono' and !Exists('$(S1ApiMonoPath)')"
+           Text="Configure S1ApiMonoPath to a built Mono S1API.dll." />
+    <Error Condition="'$(Configuration)' == 'Il2cpp' and !Exists('$(S1ApiIl2CppPath)')"
+           Text="Configure S1ApiIl2CppPath to a built IL2CPP S1API.dll." />
+  </Target>
+
+  <Target Name="DeployMono" AfterTargets="Build"
+          Condition="'$(AutomateLocalDeployment)' == 'true' and '$(Configuration)' == 'Mono' and '$(LocalMonoDeploymentPath)' != ''">
+    <MakeDir Directories="$(LocalMonoDeploymentPath)\Mods" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(LocalMonoDeploymentPath)\Mods" SkipUnchangedFiles="true" />
+  </Target>
+
+  <Target Name="DeployIl2Cpp" AfterTargets="Build"
+          Condition="'$(AutomateLocalDeployment)' == 'true' and '$(Configuration)' == 'Il2cpp' and '$(LocalIl2CppDeploymentPath)' != ''">
+    <MakeDir Directories="$(LocalIl2CppDeploymentPath)\Mods" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(LocalIl2CppDeploymentPath)\Mods" SkipUnchangedFiles="true" />
+  </Target>
+</Project>
