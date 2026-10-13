@@ -254,7 +254,7 @@ internal static class ForkliftDriverAvatarRuntime
         if (avatar.LookController != null)
             avatar.LookController.enabled = false;
 
-        var animator = avatar.Animation?.animator;
+        var animator = AvatarAccess.GetAnimator(avatar.Animation);
         if (animator != null)
         {
             animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
@@ -292,7 +292,7 @@ internal static class ForkliftDriverAvatarRuntime
             new Vector3(SteeringGripOffset, SteeringGripDepth, 0f),
             Quaternion.Euler(0f, -90f, 90f));
 
-        avatar.Animation?.IKController?.SetIKActive(false);
+        AvatarAccess.GetIKController(avatar.Animation)?.SetIKActive(false);
         SteeringRigs[key] = new SteeringRig(
             player,
             vehicle,
@@ -500,7 +500,7 @@ internal static class ForkliftDriverAvatarRuntime
         if (rig.Wheel != null)
             rig.Wheel.localRotation = rig.WheelRestRotation;
 
-        rig.Avatar?.Animation?.IKController?.SetIKActive(false);
+        AvatarAccess.GetIKController(rig.Avatar?.Animation)?.SetIKActive(false);
 
         if (rig.LeftHandTarget != null)
             Object.Destroy(rig.LeftHandTarget.gameObject);

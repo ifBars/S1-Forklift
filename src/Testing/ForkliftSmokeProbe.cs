@@ -957,7 +957,7 @@ internal sealed class ForkliftSmokeProbe
 
         var movement = S1DevUtilities.PlayerSingleton<S1PlayerMovement>.Instance;
         movement.Teleport(safePosition, false);
-        movement.SetPlayerRotation(safeRotation);
+        SetPlayerRotation(movement, safeRotation);
         MelonLogger.Msg(
             $"[S1ForkliftSmoke] STATE|TeleportedToMotel|" +
             $"Anchor={_motelTeleportPoint.position}|SafePosition={safePosition}");
@@ -1024,7 +1024,7 @@ internal sealed class ForkliftSmokeProbe
         viewDirection.y = 0f;
         if (viewDirection.sqrMagnitude > 0.01f)
         {
-            S1DevUtilities.PlayerSingleton<S1PlayerMovement>.Instance.SetPlayerRotation(
+            SetPlayerRotation(S1DevUtilities.PlayerSingleton<S1PlayerMovement>.Instance,
                 Quaternion.LookRotation(viewDirection.normalized, Vector3.up));
         }
 
@@ -1292,6 +1292,16 @@ internal sealed class ForkliftSmokeProbe
         }
     }
 
+    private static void SetPlayerRotation(S1PlayerMovement movement, Quaternion rotation)
+    {
+#if IL2CPP
+        movement.SetRotation(rotation);
+#else
+        AccessTools.Method(typeof(S1PlayerMovement), "SetRotation")
+            .Invoke(movement, new object[] { rotation });
+#endif
+    }
+
     private void UpdateVerifyDriverAvatar()
     {
         if (PhaseElapsed < 2f || _vehicle == null)
@@ -1309,7 +1319,10 @@ internal sealed class ForkliftSmokeProbe
             $"Lower={ForkliftPreferences.LowerLiftKey.Value}");
         var avatar = ForkliftDriverAvatarRuntime.GetDriverProxyAvatar(player)
                      ?? throw new InvalidOperationException("Driver avatar proxy was not created.");
-        if (!avatar.BodyContainer.gameObject.activeInHierarchy)
+        var animation = avatar.Animation;
+        var animator = AvatarAccess.GetAnimator(animation)
+                       ?? throw new InvalidOperationException("Driver avatar proxy Animator is missing.");
+        if (!AvatarAccess.GetBodyContainer(avatar).gameObject.activeInHierarchy)
             throw new InvalidOperationException("Driver avatar proxy BodyContainer is inactive.");
         if (!ForkliftDriverAvatarRuntime.IsDriverProxyEquippableHidden(player))
             throw new InvalidOperationException("Driver avatar proxy retained a visible held item.");
@@ -1331,10 +1344,10 @@ internal sealed class ForkliftSmokeProbe
             avatar.transform.position,
             avatar.transform.localPosition,
             avatar.transform.lossyScale,
-            avatar.BodyContainer.position,
+            AvatarAccess.GetBodyContainer(avatar).position,
             avatar.HipBone.position,
-            avatar.Animation.animator.enabled,
-            avatar.Animation.animator.cullingMode,
+            animator.enabled,
+            animator.cullingMode,
             player.ThirdPersonMeshesVisibleToLocalPlayer);
         var renderers = avatar.GetComponentsInChildren<SkinnedMeshRenderer>(true);
         for (var index = 0; index < renderers.Length; index++)
@@ -1436,15 +1449,13 @@ internal sealed class ForkliftSmokeProbe
                 "Steering wheel did not remain on its native hub and rotate around its local Y axle.");
         }
 
-        var animation = avatar.Animation;
-        if (animation?.animator == null ||
-            !animation.animator.GetBool(Animator.StringToHash("Sitting")))
+        if (!animator.GetBool(Animator.StringToHash("Sitting")))
         {
             throw new InvalidOperationException("Avatar Sitting animator state is not active.");
         }
 
-        var leftHand = animation.animator.GetBoneTransform(HumanBodyBones.LeftHand);
-        var rightHand = animation.animator.GetBoneTransform(HumanBodyBones.RightHand);
+        var leftHand = animator.GetBoneTransform(HumanBodyBones.LeftHand);
+        var rightHand = animator.GetBoneTransform(HumanBodyBones.RightHand);
         var leftTarget = TransformUtility.FindDescendant(_vehicle.transform, "S1Forklift_LeftHandTarget");
         var rightTarget = TransformUtility.FindDescendant(_vehicle.transform, "S1Forklift_RightHandTarget");
         if (!ForkliftDriverAvatarRuntime.TryGetAppliedHandDistances(
@@ -1454,13 +1465,13 @@ internal sealed class ForkliftSmokeProbe
         {
             throw new InvalidOperationException("Steering arm pose did not report an applied result.");
         }
-        var bodyIk = animation.IKController?.BodyIK;
+        var bodyIk = AvatarAccess.GetIKController(animation)?.BodyIK;
         var gripSeparation = leftTarget == null || rightTarget == null
             ? 0f
             : Vector3.Distance(leftTarget.position, rightTarget.position);
         MelonLogger.Msg(
             "[S1ForkliftSmoke] AVATAR_IK_STATE|" +
-            $"ControllerEnabled={animation.IKController?.enabled}|" +
+            $"ControllerEnabled={AvatarAccess.GetIKController(animation)?.enabled}|" +
             $"BodyIKPresent={bodyIk != null}|" +
             $"BodyIKEnabled={bodyIk?.enabled}|" +
             $"LeftHand={leftHand?.position.ToString() ?? "<null>"}|" +
@@ -2087,7 +2098,7 @@ internal sealed class ForkliftSmokeProbe
             throw new InvalidOperationException("Lift runtime rejected the forklift while lowering.");
         }
 
-        if (forkHeight > _forkStartHeight + 0.05f)
+        if (forkHeight > _forkStartHeight + 0.001f)
             return;
 
         if (!PalletCarryRuntime.TryReleaseForSmoke(_vehicle, out var releaseDetail))
@@ -2559,7 +2570,7 @@ internal sealed class ForkliftSmokeProbe
             vehicle.transform.up * 1.2f;
         var movement = S1DevUtilities.PlayerSingleton<S1PlayerMovement>.Instance;
         movement.Teleport(viewPosition, false);
-        movement.SetPlayerRotation(
+        SetPlayerRotation(movement,
             Quaternion.LookRotation((target - viewPosition).normalized, Vector3.up));
     }
 
@@ -2578,7 +2589,7 @@ internal sealed class ForkliftSmokeProbe
             Vector3.up * 1.4f;
         var movement = S1DevUtilities.PlayerSingleton<S1PlayerMovement>.Instance;
         movement.Teleport(viewPosition, false);
-        movement.SetPlayerRotation(
+        SetPlayerRotation(movement,
             Quaternion.LookRotation((target - viewPosition).normalized, Vector3.up));
     }
 

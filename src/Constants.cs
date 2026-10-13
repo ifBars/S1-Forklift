@@ -3,7 +3,7 @@ namespace S1Forklift;
 internal static class Constants
 {
     internal const string ModName = "Forklift & Pallets";
-    internal const string ModVersion = "1.2.0";
+    internal const string ModVersion = "1.2.1";
     internal const string ModAuthor = "Bars";
 
     internal const string VehicleCode = "forklift";
