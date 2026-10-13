@@ -24,6 +24,8 @@ param(
 
     [string]$SourceSavePath = "",
 
+    [string]$S1ApiPath = "",
+
     [switch]$KeepProcess
 )
 
@@ -61,6 +63,9 @@ $s1ApiDeployName = if ($Runtime -eq "Mono") {
     "S1API.Mono.MelonLoader.dll"
 } else {
     "S1API.Il2Cpp.MelonLoader.dll"
+}
+if (-not [string]::IsNullOrWhiteSpace($S1ApiPath)) {
+    $s1ApiBuildPath = [System.IO.Path]::GetFullPath($S1ApiPath)
 }
 $resultPath = Join-Path $runDirectory "result.txt"
 $playerLogPath = Join-Path $runDirectory "Player.log"
@@ -181,7 +186,7 @@ try {
     if ($LoadingDockOnly) {
         $arguments += "--s1forklift-loading-dock-smoke"
     }
-    if ($EmployeeTransitOnly -or $LoadingDockOnly) {
+    if (-not [string]::IsNullOrWhiteSpace($SourceSavePath)) {
         $arguments += "--s1forklift-smoke-source-save"
         $arguments += "`"$SourceSavePath`""
     }

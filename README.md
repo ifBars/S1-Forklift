@@ -6,6 +6,12 @@ Shitbox network shell, replacing its presentation and collision geometry with
 the locally installed forklift resource, and registering the result as vehicle
 code `forklift`.
 
+## Compatibility
+
+Targets Schedule I **0.4.7f12** on both Mono (`alternate`) and IL2CPP (`public`).
+Use **S1API 3.2.1** with the matching runtime. S1API 3.2.0 references game members
+removed or changed in 0.4.7, including the icon generator used by pallets.
+
 The mod does not include or redistribute the prefab, game assemblies,
 AssetRipper exports, generated IL2CPP wrappers, saves, or other proprietary game
 files. The forklift is loaded at runtime from:
@@ -90,6 +96,12 @@ world cargo.
 Copy `local.build.props.example` to `local.build.props`, set the two local game
 paths, and build each backend separately:
 
+Set `S1ApiMonoPath` and `S1ApiIl2CppPath` to the matching S1API 3.2.1 DLLs;
+the example defaults point to sibling S1API build outputs, which must also be
+updated for 0.4.7.
+After updating the IL2CPP game, launch it with MelonLoader once before building
+so `MelonLoader/Il2CppAssemblies` contains wrappers for the installed version.
+
 ```powershell
 dotnet restore .\S1Forklift.csproj -p:Configuration=Mono
 dotnet build .\S1Forklift.csproj -c Mono --no-restore -p:AutomateLocalDeployment=false
@@ -105,6 +117,13 @@ dotnet run --project .\tests\S1Forklift.LiftMathVerifier\S1Forklift.LiftMathVeri
 ```
 
 ## Runtime validation
+
+The automated runner accepts `-SourceSavePath` for any smoke mode and copies
+that completed save into its run directory. Pass `-S1ApiPath` to select the
+matching S1API 3.2.1 DLL instead of the sibling build output. Use isolated game
+paths via `-MonoGamePath` or `-Il2CppGamePath`; the runner's explicit
+`-AllowLiveInstallMutation` switch temporarily stages its two mod DLLs and
+restores the selected install's original `Mods` directory afterward.
 
 For each backend:
 

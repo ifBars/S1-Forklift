@@ -6,6 +6,8 @@
     <MonoMelonLoaderPath>$(LocalMonoDeploymentPath)\MelonLoader\net35</MonoMelonLoaderPath>
     <Il2CppAssembliesPath>$(LocalIl2CppDeploymentPath)\MelonLoader\Il2CppAssemblies</Il2CppAssembliesPath>
     <Il2CppMelonLoaderPath>$(LocalIl2CppDeploymentPath)\MelonLoader\net6</Il2CppMelonLoaderPath>
+    <S1ApiMonoPath>$(MSBuildThisFileDirectory)..\S1API\S1API\bin\MonoMelon\netstandard2.1\S1API.dll</S1ApiMonoPath>
+    <S1ApiIl2CppPath>$(MSBuildThisFileDirectory)..\S1API\S1API\bin\Il2CppMelon\net6.0\S1API.dll</S1ApiIl2CppPath>
     <AutomateLocalDeployment>false</AutomateLocalDeployment>
   </PropertyGroup>
 </Project>
